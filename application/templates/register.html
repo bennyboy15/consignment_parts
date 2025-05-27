@@ -8,6 +8,10 @@ Register
 Register your account.
 {% endblock %}
 
+{% block formAction %}
+{{ url_for('register') }}
+{% endblock %}
+
 {% block btn %}
 Sign Up
 {% endblock %}

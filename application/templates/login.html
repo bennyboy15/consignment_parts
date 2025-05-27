@@ -8,6 +8,10 @@ Login
 Sign in to your account.
 {% endblock %}
 
+{% block formAction %}
+{{ url_for('login') }}
+{% endblock %}
+
 {% block btn %}
 Sign In
 {% endblock %}
