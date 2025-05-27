@@ -1,15 +1,17 @@
 from flask import flash, redirect, render_template, request, url_for
-from models import User
+from models import User, Customer, Part, Order, OrderItem
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt()
 
 def register_routes(app, db):
     
+
     @app.route("/")
     def home():
         return redirect(url_for("login"))
 
+    # -------- AUTH ---------------
     @app.route("/login", methods=['GET', 'POST'])
     def login():
         if request.method == "POST":
@@ -59,8 +61,8 @@ def register_routes(app, db):
     @app.route("/reporting")
     def reporting():
         return render_template("reporting.html")
-
-
+    
+    # ----------- ERROR HANDLING ------------------
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template('404.html'), 404
