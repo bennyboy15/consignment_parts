@@ -19,7 +19,7 @@ def register_routes(app, db):
             user = User.query.filter_by(username=input_username).first()
 
             if user and bcrypt.check_password_hash(user.password, input_password):
-                return "Successful login!"
+                return redirect(url_for('orders'))
             else:
                 flash("Invalid username or password", "danger")
 
@@ -27,7 +27,6 @@ def register_routes(app, db):
     
     @app.route("/register", methods=['GET', 'POST'])
     def register():
-        
         if request.method == "POST":
             new_user = User(
                 username=request.form['username'], 
@@ -45,3 +44,6 @@ def register_routes(app, db):
             
         return render_template('register.html')
     
+    @app.route("/orders")
+    def orders():
+        return render_template("orders.html")
