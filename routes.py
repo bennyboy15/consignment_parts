@@ -47,3 +47,8 @@ def register_routes(app, db):
     @app.route("/orders")
     def orders():
         return render_template("orders.html")
+
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('404.html'), 404
