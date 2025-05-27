@@ -4,12 +4,13 @@ def register_routes(app, db):
     
     @app.route("/")
     def home():
-        return "I am working!"
+        return redirect(url_for("login"))
+
+    @app.route("/login")
+    def login():
+        return render_template('login.html')
     
-    @app.route("/orders")
-    def orders():
-        return ""
+    @app.route("/register")
+    def register():
+        return render_template('register.html')
     
-    @app.route("/order/<uid>")
-    def order_details(uid):
-        return ""

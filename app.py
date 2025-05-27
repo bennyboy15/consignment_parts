@@ -6,7 +6,7 @@ db = SQLAlchemy()
 
 # FACTORY DESIGN PATTERN
 def create_app():
-    app = Flask(__name__, template_folder='templates', static_folder='static', static_url_path='/')
+    app = Flask(__name__, template_folder='application/templates', static_folder='application/static', static_url_path='/')
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./consignment.db'
 
     db.init_app(app)
