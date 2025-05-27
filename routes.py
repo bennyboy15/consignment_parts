@@ -19,7 +19,7 @@ def register_routes(app, db):
             user = User.query.filter_by(username=input_username).first()
 
             if user and bcrypt.check_password_hash(user.password, input_password):
-                return redirect(url_for('orders'))
+                return redirect(url_for('dashboard'))
             else:
                 flash("Invalid username or password", "danger")
 
@@ -44,9 +44,21 @@ def register_routes(app, db):
             
         return render_template('register.html')
     
+    @app.route("/dashboard")
+    def dashboard():
+        return render_template("dashboard.html")
+    
     @app.route("/orders")
     def orders():
         return render_template("orders.html")
+    
+    @app.route("/returns")
+    def returns():
+        return render_template("returns.html")
+    
+    @app.route("/reporting")
+    def reporting():
+        return render_template("reporting.html")
 
 
     @app.errorhandler(404)
