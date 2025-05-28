@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block main %}
-
+<div class="bg-blue-50 border border-blue-200 text-blue-900 px-6 py-4 rounded-xl shadow-md mb-6">
+  <h2 class="text-xl font-semibold">Welcome back, <br><span class="font-bold">{{ current_user.first_name }} {{ current_user.last_name }}</span> 👋</h2>
+</div>
 {% endblock %}
 
 {% block dashClass %}

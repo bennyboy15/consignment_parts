@@ -1,7 +1,7 @@
 from flask import flash, redirect, render_template, request, url_for
 from models import User, Customer, Part, Order, OrderItem
 from flask_bcrypt import Bcrypt
-from flask_login import login_manager, login_required, login_user, logout_user
+from flask_login import login_manager, login_required, login_user, logout_user, current_user
 
 bcrypt = Bcrypt()
 
