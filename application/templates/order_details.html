@@ -1,12 +1,53 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <h1>Order Details for Order {{ order_items[0].order_id }}</h1>
-    <ul>
-    {% for item in order_items %}
-        <li>{{ item.part.name }} - Quantity: {{ item.quantity }}</li>
-    {% endfor %}
-    </ul>
+    <div class="max-w-4xl mx-auto p-6">
+        <a href="{{ url_for('orders') }}">
+        <button class="mb-6 px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition">
+            ← Back to Orders
+        </button>
+
+        <h1 class="text-3xl font-bold mb-6">Order Details</h1>
+        
+        </a>
+        <!-- Summary Card -->
+        <div class="bg-white rounded-xl p-6 mb-8" style="box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);">
+            <h1 class="text-lg text-gray-700">Order #{{ order_items[0].order_id }}</h1>
+            <h2 class="text-xl font-semibold mb-2">Customer Information</h2>
+            <p><strong>Name:</strong> {{ customer.name }}</p>
+            <p><strong>Email:</strong> {{ customer.email }}</p>
+            <p><strong>Order Date:</strong> {{ order.date }}</p>
+        </div>
+
+        <!-- Items Table -->
+        <div class="overflow-x-auto shadow-md rounded-2xl">
+            <table class="min-w-full bg-white overflow-hidden">
+            <thead class="bg-gray-100 text-gray-700 text-left">
+                <tr>
+                <th class="px-6 py-4">Product</th>
+                <th class="px-6 py-4">Quantity</th>
+                <th class="px-6 py-4">Price</th>
+                <th class="px-6 py-4">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-800">
+                {% for item in order_items %}
+                <tr class="border-t">
+                <td class="px-6 py-4">{{ item.part.name }}</td>
+                <td class="px-6 py-4">{{ item.quantity }}</td>
+                <td class="px-6 py-4">${{ item.part.price }}</td>
+                <td class="px-6 py-4">${{ item.part.price * item.quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        </div>
+
+        <!-- Total -->
+        <div class="text-right mt-6 text-xl font-bold">
+            Total: ${{ total }}
+        </div>
+    </div>
 {% endblock %}
 
 {% block dashClass %}

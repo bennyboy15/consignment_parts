@@ -70,8 +70,11 @@ def register_routes(app, db):
     @app.route("/orders/<int:id>")
     @login_required
     def order_details(id):
+        order = Order.query.get(id)
+        customer = order.customer
         order_items = OrderItem.query.filter(OrderItem.order_id == id).all()
-        return render_template("order_details.html", order_items=order_items)
+        total = sum(item.part.price * item.quantity for item in order_items)
+        return render_template("order_details.html", customer=customer, order=order, order_items=order_items, total=total)
 
     
     @app.route("/returns")
