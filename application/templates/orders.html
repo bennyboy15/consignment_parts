@@ -1,45 +1,93 @@
 {% extends 'base.html' %}
 
 {% block main %}
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <caption
-                    class="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-                    Our orders
-                    <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Browse a list of Flowbite
-                        products designed to help you work and play, stay organized, get answers, keep in touch, grow
-                        your business, and more.</p>
-                </caption>
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            Order #
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Customer
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            <span class="sr-only">View</span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for order in orders %}
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ order.id }}
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ order.customer.name }}
-                        </td>
-                        <td class="px-6 py-4 text-right">
-                            <a href="{{ url_for('order_details', id=order.id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+<!---------------------- FILTER ----------------------------------------->
+<div class="relative inline-block mb-2">
+    <!-- Trigger Button -->
+    <div class="inline-flex divide-x divide-gray-300 overflow-hidden rounded border border-gray-300 bg-white shadow-sm">
+        <button type="button" class="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+            Customer
+        </button>
+        <button id="toggle-customer" type="button" class="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            aria-label="Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+        </button>
     </div>
+
+    <!-- Dropdown Menu -->
+    <div id="customer-dropdown"
+        class="absolute top-full left-0 mt-1 z-50 w-56 hidden rounded border border-gray-300 bg-white shadow-lg">
+        {% for customer in customers %}
+        <a href="{{ url_for('orders', customer_id=customer.id) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            {{ customer.name }}
+        </a>
+        {% endfor %}
+    </div>
+
+    {% if request.args.get("customer_id") %}
+    <div class="mt-2 flex items-center gap-4">
+        <p class="text-sm text-gray-600">
+        Showing orders for <strong> {{ selected_customer.name }}
+        </strong>
+        </p>
+        <a href="{{ url_for('orders') }}"
+        class="inline-flex items-center rounded bg-gray-200 px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-300">
+        Clear Filter
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+
+<!---------------------- ORDER TABLE ----------------------------------------->
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <caption
+            class="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+            Our orders
+            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Browse a list of Flowbite
+                products designed to help you work and play, stay organized, get answers, keep in touch, grow
+                your business, and more.</p>
+        </caption>
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Order #
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Customer
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <span class="sr-only">View</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ order.id }}
+                </th>
+                <td class="px-6 py-4">
+                    {{ order.customer.name }}
+                </td>
+                <td class="px-6 py-4 text-right">
+                    <a href="{{ url_for('order_details', id=order.id) }}"
+                        class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    document.getElementById("toggle-customer").addEventListener("click", () => {
+        document.getElementById("customer-dropdown").classList.toggle('hidden');
+    });
+</script>
 {% endblock %}
 
 {% block dashClass %}

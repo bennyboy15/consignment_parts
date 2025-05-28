@@ -64,8 +64,18 @@ def register_routes(app, db):
     @app.route("/orders")
     @login_required
     def orders():
-        orders = Order.query.all()
-        return render_template("orders.html", orders=orders)
+        customer_id = request.args.get("customer_id", type=int)
+    
+        if customer_id:
+            orders = Order.query.filter_by(customer_id=customer_id).all()
+            selected_customer = Customer.query.filter_by(id=customer_id).first()
+        else:
+            selected_customer = None
+            orders = Order.query.all()
+
+        customers = Customer.query.all()
+        return render_template("orders.html", orders=orders, customers=customers, selected_customer=selected_customer)
+    
     
     @app.route("/orders/<int:id>")
     @login_required
