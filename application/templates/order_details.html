@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <h1>Order Details for Order {{ order_items[0].order_id }}</h1>
+    <ul>
+    {% for item in order_items %}
+        <li>{{ item.part.name }} - Quantity: {{ item.quantity }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block dashClass %}
+rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white
+{% endblock %}
+{% block ordersClass %}
+rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white
+{% endblock %}
+{% block returnsClass %}
+rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white
+{% endblock %}
+{% block reportingClass %}
+rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white
+{% endblock %}

@@ -1,12 +1,16 @@
 from flask import flash, redirect, render_template, request, url_for
 from models import User, Customer, Part, Order, OrderItem
 from flask_bcrypt import Bcrypt
+from flask_login import login_manager, login_required, login_user, logout_user
 
 bcrypt = Bcrypt()
 
 def register_routes(app, db):
     
-
+    @app.login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+    
     @app.route("/")
     def home():
         return redirect(url_for("login"))
@@ -21,12 +25,18 @@ def register_routes(app, db):
             user = User.query.filter_by(username=input_username).first()
 
             if user and bcrypt.check_password_hash(user.password, input_password):
+                login_user(user)
                 return redirect(url_for('dashboard'))
             else:
                 flash("Invalid username or password", "danger")
 
         return render_template('login.html')
     
+    @app.route('/logout')
+    def logout():
+        logout_user()
+        return redirect(url_for('login'))
+
     @app.route("/register", methods=['GET', 'POST'])
     def register():
         if request.method == "POST":
@@ -47,18 +57,30 @@ def register_routes(app, db):
         return render_template('register.html')
     
     @app.route("/dashboard")
+    @login_required 
     def dashboard():
         return render_template("dashboard.html")
     
     @app.route("/orders")
+    @login_required
     def orders():
-        return render_template("orders.html")
+        orders = Order.query.all()
+        return render_template("orders.html", orders=orders)
+    
+    @app.route("/orders/<int:id>")
+    @login_required
+    def order_details(id):
+        order_items = OrderItem.query.filter(OrderItem.order_id == id).all()
+        return render_template("order_details.html", order_items=order_items)
+
     
     @app.route("/returns")
+    @login_required
     def returns():
         return render_template("returns.html")
     
     @app.route("/reporting")
+    @login_required
     def reporting():
         return render_template("reporting.html")
     
@@ -66,3 +88,4 @@ def register_routes(app, db):
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template('404.html'), 404
+    

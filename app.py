@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
 from dotenv import load_dotenv
+from flask_login import LoginManager
 
 db = SQLAlchemy()
 load_dotenv()
@@ -13,6 +14,10 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./consignment.db'
     app.secret_key = os.getenv("SECRET_KEY")
     db.init_app(app)
+
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'login' 
 
     from routes import register_routes
     register_routes(app, db)
