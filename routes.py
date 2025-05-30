@@ -97,6 +97,13 @@ def register_routes(app, db):
     def reporting():
         return render_template("reporting.html")
     
+    @app.route("/profile")
+    @login_required
+    def profile():
+        return render_template("profile.html")
+
+
+    
     # ----------- ERROR HANDLING ------------------
     @app.errorhandler(404)
     def page_not_found(e):
