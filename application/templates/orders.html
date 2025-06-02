@@ -39,7 +39,6 @@
         </a>
     </div>
     {% endif %}
-
 </div>
 
 <!---------------------- ORDER TABLE ----------------------------------------->
@@ -59,6 +58,12 @@
                     Customer
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    # of Parts
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Total
+                </th>
+                <th scope="col" class="px-6 py-3">
                     <span class="sr-only">View</span>
                 </th>
             </tr>
@@ -71,6 +76,12 @@
                 </th>
                 <td class="px-6 py-4">
                     {{ order.customer.name }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ order.total_parts }} total items
+                </td>
+                <td class="px-6 py-4">
+                    ${{ order.total_price }}
                 </td>
                 <td class="px-6 py-4 text-right">
                     <a href="{{ url_for('order_details', id=order.id) }}"

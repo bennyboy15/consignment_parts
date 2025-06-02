@@ -2,6 +2,7 @@ from flask import flash, redirect, render_template, request, url_for
 from models import User, Customer, Part, Order, OrderItem
 from flask_bcrypt import Bcrypt
 from flask_login import login_manager, login_required, login_user, logout_user, current_user
+from sqlalchemy.orm import joinedload
 
 bcrypt = Bcrypt()
 
@@ -59,19 +60,45 @@ def register_routes(app, db):
     @app.route("/dashboard")
     @login_required 
     def dashboard():
-        return render_template("dashboard.html")
+        orders = Order.query.options(
+                joinedload(Order.customer),
+                joinedload(Order.order_items).joinedload(OrderItem.part)
+            ).all()
+        
+        total_orders = Order.query.count()
+        total_user = User.query.count()
+        total_revenue = 0
+        for order in orders:
+            for item in order.order_items:
+                total_revenue += item.quantity * item.part.price
+        total_revenue = round(total_revenue,2)
+        return render_template("dashboard.html", total_orders=total_orders, total_user=total_user, total_revenue=total_revenue)
     
     @app.route("/orders")
     @login_required
     def orders():
         customer_id = request.args.get("customer_id", type=int)
-    
+        
+        orders = Order.query.options(
+                joinedload(Order.customer),
+                joinedload(Order.order_items).joinedload(OrderItem.part)
+            ).all()
+        
         if customer_id:
             orders = Order.query.filter_by(customer_id=customer_id).all()
             selected_customer = Customer.query.filter_by(id=customer_id).first()
         else:
             selected_customer = None
-            orders = Order.query.all()
+                
+        for order in orders:
+            # Total price
+            order.total_price = round(sum(item.quantity * item.part.price for item in order.order_items), 2)
+            
+            # Number of parts (sum of quantities, e.g. 3x filters + 2x pads = 5 parts total)
+            order.total_parts = sum(item.quantity for item in order.order_items)
+
+            # OR: Count distinct line items
+            order.item_count = len(order.order_items)
 
         customers = Customer.query.all()
         return render_template("orders.html", orders=orders, customers=customers, selected_customer=selected_customer)
@@ -102,10 +129,26 @@ def register_routes(app, db):
     def profile():
         return render_template("profile.html")
 
-
-    
     # ----------- ERROR HANDLING ------------------
     @app.errorhandler(404)
     def page_not_found(e):
         return render_template('404.html'), 404
     
+    # ------ TEMPLATE FILTER -------
+    @app.template_filter('currency')
+    def currency_format(value):
+        return "${:,.2f}".format(value)
+
+    # ---------- OTHER --------------
+    @app.route('/update_user/<int:id>')
+    def update_user(id):
+        user = User.query.filter(User.uid == id).first()
+        firstName = request.args.get('firstName')
+        lastName = request.args.get('lastName')
+        user.first_name = firstName
+        user.last_name = lastName
+        try:
+            db.session.commit()
+        except:
+            return "Error when updating user profile!"
+        return redirect(url_for('dashboard'))

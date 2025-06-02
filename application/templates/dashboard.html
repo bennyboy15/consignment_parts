@@ -1,9 +1,33 @@
 {% extends 'base.html' %}
 
+{% block title %}Dashboard{% endblock %}
+
 {% block main %}
 <div class="bg-blue-50 border border-blue-200 text-blue-900 px-6 py-4 rounded-xl shadow-md mb-6">
-  <h2 class="text-xl font-semibold">Welcome back, <br><span class="font-bold">{{ current_user.first_name }} {{ current_user.last_name }}</span> 👋</h2>
+  <h2 class="text-xl font-semibold">Welcome back, <br><span class="font-bold">{{ current_user.first_name }} {{
+      current_user.last_name }}</span> 👋</h2>
 </div>
+<div class="flex gap-10">
+  <!-- Card 1 -->
+  <div class="flex-1 bg-white rounded-xl shadow-center p-5">
+    <h2 class="text-sm font-medium text-gray-500">Total Orders</h2>
+    <p class="text-2xl font-semibold mt-1">{{ total_orders }}</p>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="flex-1 bg-white rounded-xl shadow-center p-5">
+    <h2 class="text-sm font-medium text-gray-500">Revenue</h2>
+    <p class="text-2xl font-semibold mt-1">{{ total_revenue | currency }}</p>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="flex-1 bg-white rounded-xl shadow-center p-5">
+    <h2 class="text-sm font-medium text-gray-500">Active Users</h2>
+    <p class="text-2xl font-semibold mt-1">{{ total_user }}</p>
+  </div>
+</div>
+</div>
+
 {% endblock %}
 
 {% block dashClass %}
