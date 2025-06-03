@@ -103,7 +103,8 @@ def register_routes(app, db):
             order.item_count = len(order.order_items)
 
         customers = Customer.query.all()
-        return render_template("orders.html", orders=orders, customers=customers, selected_customer=selected_customer)
+        parts = Part.query.all()
+        return render_template("orders.html", orders=orders, customers=customers, selected_customer=selected_customer, parts=parts)
     
     
     @app.route("/orders/<int:id>")
