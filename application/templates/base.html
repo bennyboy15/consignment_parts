@@ -13,7 +13,7 @@
 
     <!-- Nav Bar -->
     <nav class="bg-gray-800 z-50">
-        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div class="mx-auto px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     <!-- Mobile menu button-->
@@ -92,17 +92,17 @@
         </div>
 
         <!-- Mobile menu, show/hide based on menu state. -->
-        <div class="sm:hidden" id="mobile-menu">
+        <div class="sm:hidden hidden" id="mobile-menu">
             <div class="space-y-1 px-2 pt-2 pb-3">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="#" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+                <a href="{{ url_for('dashboard') }}" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
                     aria-current="page">Dashboard</a>
-                <a href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Team</a>
-                <a href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Projects</a>
-                <a href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Calendar</a>
+                <a href="{{ url_for('orders') }}"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Orders</a>
+                <a href="{{ url_for('returns') }}"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Returns</a>
+                <a href="{{ url_for('reporting') }}"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Reporting</a>
             </div>
         </div>
     </nav>
@@ -112,17 +112,13 @@
         {% block main %}{% endblock %}
     </main>
     <script>
-        
-        const profileBtn = document.getElementById("user-menu-button");
-        const profileMenu = document.getElementById("profile-options");
-        profileBtn.addEventListener("click", () => {
-            profileMenu.classList.toggle("hidden");
+    
+        document.getElementById("user-menu-button").addEventListener("click", () => {
+            document.getElementById("profile-options").classList.toggle("hidden");
         });
 
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuBtn = document.getElementById('mobile-btn');
-        mobileMenuBtn.addEventListener("click", () => {
-            mobileMenu.classList.toggle("hidden");
+        document.getElementById('mobile-btn').addEventListener("click", () => {
+            document.getElementById('mobile-menu').classList.toggle("hidden");
         });
         
     </script>
