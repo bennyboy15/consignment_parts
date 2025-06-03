@@ -57,6 +57,7 @@ def register_routes(app, db):
             
         return render_template('register.html')
     
+    # ---------- DASHBOARD ---------------------
     @app.route("/dashboard")
     @login_required 
     def dashboard():
@@ -74,6 +75,7 @@ def register_routes(app, db):
         total_revenue = round(total_revenue,2)
         return render_template("dashboard.html", total_orders=total_orders, total_user=total_user, total_revenue=total_revenue)
     
+    # ---------- ORDERS ---------------------
     @app.route("/orders")
     @login_required
     def orders():
@@ -112,18 +114,25 @@ def register_routes(app, db):
         order_items = OrderItem.query.filter(OrderItem.order_id == id).all()
         total = sum(item.part.price * item.quantity for item in order_items)
         return render_template("order_details.html", customer=customer, order=order, order_items=order_items, total=total)
-
     
+    @app.route("/new_order")
+    @login_required
+    def new_order():
+        return "NEW ORDER MADE!"
+
+    # ---------- RETURNS ---------------------
     @app.route("/returns")
     @login_required
     def returns():
         return render_template("returns.html")
     
+    # ---------- REPORTING ---------------------
     @app.route("/reporting")
     @login_required
     def reporting():
         return render_template("reporting.html")
     
+    # ---------- USER PROFILE ---------------------
     @app.route("/profile")
     @login_required
     def profile():
@@ -134,7 +143,7 @@ def register_routes(app, db):
     def page_not_found(e):
         return render_template('404.html'), 404
     
-    # ------ TEMPLATE FILTER -------
+    # ------ TEMPLATE FILTERS -------
     @app.template_filter('currency')
     def currency_format(value):
         return "${:,.2f}".format(value)
@@ -152,3 +161,19 @@ def register_routes(app, db):
         except:
             return "Error when updating user profile!"
         return redirect(url_for('dashboard'))
+    
+    @app.route('/add_customers')
+    def add_customers():
+        customers = [
+            Customer(name="Alice Doe"),
+            Customer(name="John Doe"),
+            Customer(name="Random Guy"),
+            Customer(name="Alex Jones"),
+            Customer(name="John Cena")
+            ]
+        try:
+            db.session.add_all(customers)
+            db.session.commit()
+        except:
+            return "Error when saving new customers!"
+        return "Successfully created new customers!"
