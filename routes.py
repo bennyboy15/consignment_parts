@@ -177,3 +177,8 @@ def register_routes(app, db):
         except:
             return "Error when saving new customers!"
         return "Successfully created new customers!"
+    
+
+    @app.route("/plumsail")
+    def plumsail():
+        return render_template("plumsail.html")

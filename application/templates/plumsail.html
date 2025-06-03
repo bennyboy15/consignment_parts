@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block main %}
-
+<script type="text/javascript" src="https://forms.plumsail.com/api/widget/6014ed7c-860e-4a23-950a-1ff3a7ebbea5"></script>
+<div id="plumsail-form-20lb"><div class="fd-form-loading"></div></div>
+<script type="text/javascript">
+    var fd = new Plumsail.Form("#plumsail-form-20lb", "6014ed7c-860e-4a23-950a-1ff3a7ebbea5")
+</script>
 {% endblock %}
 
 {% block dashClass %}
@@ -11,11 +15,11 @@ rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:t
 rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white
 {% endblock %}
 {% block returnsClass %}
-rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white
+rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white
 {% endblock %}
 {% block reportingClass %}
 rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white
 {% endblock %}
 {% block plumsailClass %}
-rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white
+rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white
 {% endblock %}
