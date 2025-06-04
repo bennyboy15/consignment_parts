@@ -1,4 +1,5 @@
 from flask import flash, redirect, render_template, request, url_for
+from forms import LoginForm, RegisterForm
 from models import User, Customer, Part, Order, OrderItem
 from flask_bcrypt import Bcrypt
 from flask_login import login_manager, login_required, login_user, logout_user, current_user
@@ -17,8 +18,8 @@ def register_routes(app, db):
         return redirect(url_for("login"))
 
     # -------- AUTH ---------------
-    @app.route("/login", methods=['GET', 'POST'])
-    def login():
+    #@app.route("/login", methods=['GET', 'POST'])
+    #def login():
         if request.method == "POST":
             input_username = request.form['username']
             input_password = request.form['password']
@@ -33,13 +34,26 @@ def register_routes(app, db):
 
         return render_template('login.html')
     
+    @app.route('/login', methods=['GET', 'POST'])
+    def login():
+        form = LoginForm()
+        if form.validate_on_submit():
+            user = User.query.filter_by(username=form.username.data).first()
+            if user and bcrypt.check_password_hash(user.password, form.password.data):
+                login_user(user)
+                return redirect(url_for('dashboard'))
+            else:
+                flash("Invalid username or password", "danger")
+        return render_template('login.html', form=form)
+
     @app.route('/logout')
     def logout():
         logout_user()
         return redirect(url_for('login'))
 
-    @app.route("/register", methods=['GET', 'POST'])
-    def register():
+    #@app.route("/register", methods=['GET', 'POST'])
+    #def register():
+        form = RegisterForm()
         if request.method == "POST":
             new_user = User(
                 username=request.form['username'], 
@@ -53,10 +67,39 @@ def register_routes(app, db):
                 return redirect(url_for("login"))
             except:
                 flash("Error when registering")
-                return redirect(url_for("register"))
+                return redirect(url_for("register"), form=form)
             
-        return render_template('register.html')
+        return render_template('register.html', form=form)
     
+    @app.route("/register", methods=['GET', 'POST'])
+    def register():
+        form = RegisterForm()
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                # Check if user already exists
+                existing_user = User.query.filter_by(username=form.username.data).first()
+                if existing_user:
+                    flash("Email already registered. Please log in or use a different email.", "warning")
+                    return redirect(url_for("register"))
+
+                # Create new user
+                new_user = User(
+                    username=form.username.data,
+                    password=bcrypt.generate_password_hash(form.password.data).decode('utf-8'),
+                    role="Software Developer",
+                    description="Makes the software!"
+                )
+                try:
+                    db.session.add(new_user)
+                    db.session.commit()
+                    flash("Registration successful! Please log in.", "success")
+                    return redirect(url_for("login"))
+                except Exception as e:
+                    flash("An error occurred during registration. Please try again.", "danger")
+                    return render_template('register.html', form=form)
+        return render_template('register.html', form=form)
+
+
     # ---------- DASHBOARD ---------------------
     @app.route("/dashboard")
     @login_required 

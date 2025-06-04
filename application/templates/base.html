@@ -42,7 +42,8 @@
                     </div>
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
-                            <a href="{{ url_for('dashboard') }}" class="{% block dashClass %}{% endblock %}" aria-current="page">Dashboard</a>
+                            <a href="{{ url_for('dashboard') }}" 
+                                class="{% block dashClass %}{% endblock %}" aria-current="page">Dashboard</a>
                             <a href="{{ url_for('orders') }}"
                                 class="{% block ordersClass %}{% endblock %}">Orders</a>
                             <a href="{{ url_for('returns') }}"
