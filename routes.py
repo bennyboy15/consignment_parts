@@ -51,10 +51,15 @@ def register_routes(app, db):
         logout_user()
         return redirect(url_for('login'))
 
-    #@app.route("/register", methods=['GET', 'POST'])
-    #def register():
+    @app.route("/register", methods=['GET', 'POST'])
+    def register():
         form = RegisterForm()
         if request.method == "POST":
+            if request.form['username'] and request.form['password']:
+                if User.query.filter(User.username == request.form['username']).first():
+                    flash("User already exists!", "danger")
+                    return redirect(url_for("register"))
+
             new_user = User(
                 username=request.form['username'], 
                 password=bcrypt.generate_password_hash(request.form['password']).decode('utf-8'), 
@@ -64,24 +69,20 @@ def register_routes(app, db):
             try:
                 db.session.add(new_user)
                 db.session.commit()
+                flash("Successfully created new user!", "success")
                 return redirect(url_for("login"))
             except:
-                flash("Error when registering")
-                return redirect(url_for("register"), form=form)
+                flash("Error when registering", "danger")
+                return redirect(url_for("register"))
             
         return render_template('register.html', form=form)
     
-    @app.route("/register", methods=['GET', 'POST'])
-    def register():
+    #@app.route("/register", methods=['GET', 'POST'])
+    #def register():
         form = RegisterForm()
-        if request.method == 'POST':
+        if request.method == "POST":
+            print(f"--------\n{form.username.data}\n{form.password.data}\n---------------")
             if form.validate_on_submit():
-                # Check if user already exists
-                existing_user = User.query.filter_by(username=form.username.data).first()
-                if existing_user:
-                    flash("Email already registered. Please log in or use a different email.", "warning")
-                    return redirect(url_for("register"))
-
                 # Create new user
                 new_user = User(
                     username=form.username.data,
@@ -95,6 +96,7 @@ def register_routes(app, db):
                     flash("Registration successful! Please log in.", "success")
                     return redirect(url_for("login"))
                 except Exception as e:
+                    print("ERROR:", e)
                     flash("An error occurred during registration. Please try again.", "danger")
                     return render_template('register.html', form=form)
         return render_template('register.html', form=form)

@@ -1,3 +1,47 @@
 .shadow-center {
     box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
+
+/* General flash message styling */
+.flashes {
+    position: fixed;
+    top: 0;
+    left:25%;
+    width: 50%;
+    list-style-type: none;
+    padding: 10px;
+    margin: 10px 0;
+    z-index: 50;
+}
+
+/* Success message */
+.success {
+    color: green;
+    border: 2px solid green;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Danger message */
+.danger {
+    color: rgb(101, 1, 1);
+    border: 2px solid rgb(101, 1, 1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Warning message */
+.warning {
+    color: orange;
+    border: 2px solid orange;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Info message */
+.info {
+    color: white;
+    background-color: blue;
+    padding: 10px;
+    border-radius: 5px;
+}

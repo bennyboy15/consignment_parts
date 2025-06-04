@@ -5,10 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
   </head>
 
   <body class="min-h-screen flex items-center justify-center">
     <canvas id="backgroundCanvas" class="z-100 fixed"></canvas>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+            <div class="{{ category }} flex items-center p-4 mb-4 text-sm rounded-lg bg-white/10 backdrop-blur-sm" role="alert">
+              <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+              </svg>
+              <span class="sr-only">Info</span>
+              <div>
+                <span class="font-medium">{{ message }}</span>
+              </div>
+            </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
 
     <!-- AUTH CONTAINER -->
     <div
