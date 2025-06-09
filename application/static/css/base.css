@@ -39,9 +39,9 @@
 }
 
 /* Info message */
-.info {
-    color: white;
-    background-color: blue;
+.message {
+    color: rgb(82, 82, 82);
+    border: 2px solid rgb(82, 82, 82);
     padding: 10px;
     border-radius: 5px;
 }
