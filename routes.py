@@ -27,16 +27,35 @@ def register_routes(app, db):
     
     @app.route("/delete_part/<int:id>", methods=['POST'])
     def delete_part(id):
-        part = Part.query.filter_by(Part.id == id).first()
-        if part:
+        part = Part.query.get(id)
+
+        if not part:
+            flash("Part does not exist.", "warning")
+            return redirect(url_for('test'))
+
+        try:
+            db.session.delete(part)
+            db.session.commit()
+            flash("Deleted successfully.", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error deleting part: {e}", "danger")
+
+        return redirect(url_for('test'))
+    
+    @app.route("/edit_part/<int:id>", methods=['GET', 'POST'])
+    def edit_part(id):
+        part = Part.query.get(id)
+        if request.method == 'POST':
+            part.name = request.form['name']
+            part.price = request.form['price']
             try:
-                db.session.delete(part)
                 db.session.commit()
                 return redirect(url_for('test'))
             except:
-                return "Error when deleting"
-        else:
-            return "Part does not exist"
+                return "Error when saving changes"
+
+        return render_template('edit_part.html', part=part)
         
     @app.login_manager.user_loader
     def load_user(user_id):
