@@ -18,8 +18,8 @@
             </svg>
         </button>
     </div>
-    <button type="button" id="orderBtn" class="px-3 py-2 bg-blue-700 rounded text-sm font-medium text-white hover:bg-blue-900">New Order +</button>
 
+    <button type="button" id="orderBtn" class="px-3 py-2 bg-blue-700 rounded text-sm font-medium text-white hover:bg-blue-900">New Order +</button>
     <!-- Dropdown Menu -->
     <div id="customer-dropdown"
         class="absolute top-full left-0 mt-1 z-50 w-56 hidden rounded border border-gray-300 bg-white shadow-lg">
@@ -29,20 +29,20 @@
         </a>
         {% endfor %}
     </div>
+</div>
 
     {% if request.args.get("customer_id") %}
-    <div class="mt-2 flex items-center gap-4">
-        <p class="text-sm text-gray-600">
-        Showing orders for <strong> {{ selected_customer.name }}
-        </strong>
-        </p>
-        <a href="{{ url_for('orders') }}"
-        class="inline-flex items-center rounded bg-gray-200 px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-300">
-        Clear Filter
-        </a>
-    </div>
+        <div class="my-2 flex items-center gap-4">
+            <p class="text-sm text-gray-600">
+            Showing orders for <strong> {{ selected_customer.name }}
+            </strong>
+            </p>
+            <a href="{{ url_for('orders') }}"
+            class="inline-flex items-center rounded bg-gray-200 px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-300">
+            Clear Filter
+            </a>
+        </div>
     {% endif %}
-</div>
 
 <!----------------------- MODAL -------------------------------->
 <div id="crud-modal-bg" class="fixed hidden inset-0 bg-gray-900/50 z-40"></div>

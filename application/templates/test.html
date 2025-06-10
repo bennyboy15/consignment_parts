@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="p-5">
+
+    <div class="my-5">
+        <h1>VIEWING</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for part in parts %}
+                <tr>
+                    <td>{{ part.name }}</td>
+                    <td>{{ part.price }}</td>
+                    <td>
+                        <form action="{{ url_for('delete_part', id=part.id) }}" method="POST">
+                            <button type="submit">DELETE</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mb-5">
+        <h1>ADD</h1>
+        <form action="{{ url_for('test') }}" method="POST">
+            {{ form.hidden_tag() }}
+
+            {{ form.name.label(class="block text-sm font-medium text-gray-900") }}
+            {{ form.name(class="border rounded") }}
+
+            {{ form.price.label(class="block text-sm font-medium text-gray-900") }}
+            {{ form.price(class="border rounded") }}
+
+            <button type="submit" class="bg-blue-500 rounded p-1 text-white">ADD PART +</button>
+        </form>
+    </div>
+
+</body>
+</html>

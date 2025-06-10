@@ -1,5 +1,5 @@
 from flask import flash, redirect, render_template, request, url_for
-from forms import LoginForm, RegisterForm
+from forms import LoginForm, PartForm, RegisterForm
 from models import User, Customer, Part, Order, OrderItem
 from flask_bcrypt import Bcrypt
 from flask_login import login_manager, login_required, login_user, logout_user, current_user
@@ -8,7 +8,36 @@ from sqlalchemy.orm import joinedload
 bcrypt = Bcrypt()
 
 def register_routes(app, db):
+
+    @app.route("/test", methods=['GET', 'POST'])
+    def test():
+        form = PartForm()
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                new_part = Part(name=form.name.data, price=form.price.data)
+                try:
+                    db.session.add(new_part)
+                    db.session.commit()
+                    return redirect(url_for('test'))
+                except:
+                    return "Error when saving to database"
+            return "Form not valid!"
+        parts = Part.query.all()
+        return render_template("test.html", parts=parts, form=form)
     
+    @app.route("/delete_part/<int:id>", methods=['POST'])
+    def delete_part(id):
+        part = Part.query.filter_by(Part.id == id).first()
+        if part:
+            try:
+                db.session.delete(part)
+                db.session.commit()
+                return redirect(url_for('test'))
+            except:
+                return "Error when deleting"
+        else:
+            return "Part does not exist"
+        
     @app.login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
