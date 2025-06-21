@@ -9,6 +9,10 @@ bcrypt = Bcrypt()
 
 def register_routes(app, db):
 
+    @app.route("/core", methods=['GET', 'POST'])
+    def core():
+        return render_template('core.html')
+
     @app.route("/test", methods=['GET', 'POST'])
     def test():
         form = PartForm()
@@ -272,7 +276,6 @@ def register_routes(app, db):
             return "Error when saving new customers!"
         return "Successfully created new customers!"
     
-
     @app.route("/plumsail")
     def plumsail():
         return render_template("plumsail.html")

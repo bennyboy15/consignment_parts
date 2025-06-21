@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cores</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/CMV TRUCK.png') }}"> <!--FLAVICON-->
+    <style>
+        .whitesmoke {
+            background: linear-gradient(to bottom right, #ffffff, #f5f5f5);
+        }
+    </style>
+</head>
+<body class="whitesmoke flex h-screen bg-gray-200">
+
+    <nav class="border bg-white flex flex-1 max-w-[10vh] flex-col items-center justify-between rounded-br-xl rounded-tr-xl h-full">
+        <img src="{{ url_for('static', filename='img/CMV TRUCK.png') }}" alt="" class="h-[4vh] w-[4vh] mt-3">
+        <div class="m-0 p-0 w-full">
+            <ul class="flex flex-col">
+                <a href="" class="font-semibold p-1 px-3 hover:bg-red-200 hover:text-red-700 bg-gray-100 text-red-700">Home</a>
+                <a href="" class="font-semibold p-1 px-3 hover:bg-red-200 hover:text-red-700">POS</a>
+                <a href="" class="font-semibold p-1 px-3 hover:bg-red-200 hover:text-red-700">Search</a>
+                <a href="" class="font-semibold p-1 px-3 hover:bg-red-200 hover:text-red-700">Manifest</a>
+                <a href="" class="font-semibold p-1 px-3 hover:bg-red-200 hover:text-red-700">Reporting</a>
+                <a href="" class="font-semibold p-1 px-3 hover:bg-red-200 hover:text-red-700">Admin</a>
+            </ul>
+        </div>
+        <div class="text-center text-sm">Benjamin Harvey</div>
+    </nav>
+
+    <div class=" flex-[8] p-5">
+        <!--HEADER -->
+        <div class="flex justify-between items-center bg-white border rounded p-4 font-semibold text-gray-800 text-lg mb-5">
+            <div class="flex flex-col">
+                <p class="text-gray-500 text-xs">Good afternoon!</p>
+                <h1 class="text-gray-800 text-xl">Benjamin Harvey</h1>
+            </div>
+            <p>CMV Core Deposit</p>
+            <div class="flex">
+                <p class="flex items-center text-xs mr-3">Your authorisation level is ENTRY</p>
+                <div class="flex flex-col items-center border rounded-xl p-1">
+                    <p>SAT</p>
+                    <p>21st June</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BRANCH SELECT -->
+        <ul class="flex mb-5">
+            <a href="" class="flex flex-col bg-white rounded border mr-2 w-1/4">
+                <img src="{{ url_for('static', filename='img/CMV TRUCK.png') }}" alt="" class="flex-[7] h-[10vh] w-full">
+                <p class="flex-1 text-center bg-blue-400 text-blue-100 font-semibold p-1">CMV Truck Centre - Cavan</p>
+            </a>
+            <a href="" class="bg-white rounded border mr-2 w-1/4">LINK</a>
+            <a href="" class="bg-white rounded border mr-2 w-1/4">LINK</a>
+            <a href="" class="bg-white rounded border w-1/4">LINK</a>
+        </ul>            
+
+        <!-- ORDERS TABLE -->
+        <div class="bg-white border rounded h-[60vh] mb-5">
+            <h2 class="p-2 bg-gray-200 font-semibold text-md text-gray-800 pl-3">Cores List</h2>
+            <table class="w-full">
+                <tr>
+                    <thead class="font-semibold text-gray-600 bg-gray-200 text-xs">
+                        <th>CRC #</th>
+                        <th>Customer Invoice</th>
+                        <th>Customer</th>
+                        <th>Part #</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Supplier</th>
+                        <th>Supplier Invoice</th>
+                        <th>Salesman</th>
+                        <th>POS Date</th>
+                        <th>Status</th>
+                    </thead>
+                </tr>
+
+                <tr class="text-xs text-center border-b">
+                    <td class="p-2 font-semibold">
+                        <a href="" class="underline text-blue-500 hover:text-blue-700">14971</a>
+                    </td>
+                    <td class="p-2">I31024608</td>
+                    <td class="p-2">TML Transport</td>
+                    <td class="p-2">KWTAS8516ARC0RE</td>
+                    <td class="p-2">1</td>
+                    <td class="p-2">$1,560</td>
+                    <td class="p-2">PACCAR</td>
+                    <td class="p-2">3771623</td>
+                    <td class="p-2">Benjamin Harvey</td>
+                    <td class="p-2">04/02/2025</td>
+                    <td class="p-2">Returned</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
