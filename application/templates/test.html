@@ -10,6 +10,7 @@
 </head>
 
 <body class="p-5">
+
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <ul class="flashes">
@@ -92,6 +93,7 @@
         </form>
     </div>
 
+    <a href="{{ url_for('create_order') }}">NEW ORDER</a>
 </body>
 
 </html>

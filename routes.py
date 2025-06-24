@@ -1,5 +1,6 @@
-from flask import flash, redirect, render_template, request, url_for
-from forms import LoginForm, PartForm, RegisterForm
+from collections import defaultdict
+from flask import flash, jsonify, redirect, render_template, request, url_for
+from forms import LoginForm, OrderForm, OrderItemForm, PartForm, RegisterForm
 from models import User, Customer, Part, Order, OrderItem
 from flask_bcrypt import Bcrypt
 from flask_login import login_manager, login_required, login_user, logout_user, current_user
@@ -8,6 +9,32 @@ from sqlalchemy.orm import joinedload
 bcrypt = Bcrypt()
 
 def register_routes(app, db):
+
+    @app.route("/return-form")
+    def return_form():
+        orders = Order.query.all()
+        order_items_py = OrderItem.query.all()
+        parts = Part.query.all()
+
+        # Create a quick lookup for part_id -> part_name
+        part_lookup = {part.id: part.name for part in parts}
+
+        order_items = []
+        for item in order_items_py:
+            order_items.append({
+                "order_id": item.order_id,
+                "part_id": item.part_id,
+                "part_name": part_lookup.get(item.part_id, f"Part {item.part_id}"),
+                "quantity": item.quantity
+            })
+
+        return render_template(
+            "return_form.html",
+            orders=orders,
+            order_items=order_items
+        )
+
+
 
     @app.route("/test", methods=['GET', 'POST'])
     def test():
@@ -57,6 +84,15 @@ def register_routes(app, db):
 
         return render_template('edit_part.html', part=part)
         
+    @app.route('/create_order', methods=['GET', 'POST'])
+    def create_order():
+        customers = Customer.query.all()
+        parts = Part.query.all()
+        return render_template('create_order.html', customers=customers, parts=parts)
+
+
+
+
     @app.login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))

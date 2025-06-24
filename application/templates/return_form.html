@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Returns</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+    <form method="POST" action="/submit-return" class="max-w-3xl mx-auto p-6 space-y-6 bg-white rounded-xl shadow">
+        <h2 class="text-2xl font-bold">Return Items</h2>
+
+        <!-- Order Dropdown -->
+        <div>
+            <label class="font-semibold">Select Order</label>
+            <select id="order_id" name="order_id" onchange="loadParts()" class="w-full p-2 border rounded">
+                <option value="">-- Select an Order --</option>
+                {% for order in orders %}
+                <option value="{{ order.id }}">
+                    Order #{{ order.id }} (Customer #{{ order.customer_id }})
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Parts List -->
+        <div id="parts_container" class="overflow-x-auto rounded-lg shadow">
+            <table id="parts-table" class="min-w-full border border-gray-200 divide-y divide-gray-200">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Part ID</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Qty</th>
+                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Returning</th>
+                    </tr>
+                </thead>
+                <tbody id="parts-body" class="bg-white divide-y divide-gray-100">
+                    <tr>
+                        <td class="px-4 py-2 text-sm text-gray-800">Temp</td>
+                        <td class="px-4 py-2 text-sm text-gray-800">1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- Submit -->
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Submit Return
+        </button>
+    </form>
+
+    <script>
+        function loadParts(){
+            // Clear existing rows
+            const tbody = document.getElementById("parts-body");
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+            tbody.innerHTML = "";
+
+            // JSONIFY Order Items
+            const orders = {{ order_items | tojson }};
+            console.log("Orders:", orders);
+            const orderId = parseInt(document.getElementById("order_id").value);
+            console.log(orderId);
+            // Filter items by what order number was selected
+            const filteredItems = orders.filter(item => item.order_id === orderId);
+            console.log(filteredItems, filteredItems.length);
+
+            // Add parts to table
+            const table = document.getElementById("parts-body");
+            filteredItems.forEach((item, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                <td class="px-4 py-2 text-sm text-gray-800">${item.part_name}</td>
+                <td class="px-4 py-2 text-sm text-gray-800">${item.quantity}</td>
+                <td class="px-4 py-2 text-sm text-gray-800">
+                    <input type="number" name="returns[${item.part_id}]" value="0" min="0" max="${item.quantity}" class="w-20 border rounded text-center">
+                </td>
+                `
+                table.appendChild(row);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

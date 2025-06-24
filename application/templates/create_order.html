@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Order</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-5">
+    
+    <!-- CUSTOMER -->
+    <select name="customer" id="customer-select" class="border rounded bg-gray-200 p-1">
+        {% for customer in customers %}
+        <option value="{{ customer.name }}">{{ customer.name }}</option>
+        {% endfor %}
+    </select>
+
+    <!-- PART & QTY -->
+    <div class="border w-1/2 p-2 mt-2">
+        <select name="part" id="part-select" class="border rounded bg-gray-200 p-2">
+            {% for part in parts %}
+            <option value="{{ part.name }}">{{ part.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="number" name="qty" id="qty-input" class="border rounded bg-gray-200 p-2">
+        <button onclick="addPart()" class="bg-blue-500 p-2 text-white rounded">ADD +</button>
+    </div>
+
+    <!-- ORDER TABLE -->
+     <table class="overflow-x-auto rounded-xl shadow-md mt-6">
+        <thead class="bg-gray-100">
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Part</th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Qty</th>
+        </thead>
+        <tbody id="order-body" class="divide-y divide-gray-100">
+        </tbody>
+     </table>
+
+     <button class="bg-green-500 rounded text-white p-2 mt-5">SUBMIT ORDER</button>
+
+     <script>
+        function addPart(){
+            const orderBody = document.getElementById('order-body');
+            let new_row = document.createElement('tr');
+            new_row.innerHTML = 
+            `<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Test</td>
+             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">3</td>`;
+            orderBody.appendChild(new_row);
+        }
+     </script>
+
+</body>
+</html>

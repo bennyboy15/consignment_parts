@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import FloatField, StringField, PasswordField, SubmitField
+from wtforms import FieldList, FloatField, FormField, IntegerField, SelectField, StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email
 
 class LoginForm(FlaskForm):
@@ -15,3 +15,14 @@ class RegisterForm(FlaskForm):
 class PartForm(FlaskForm):
     name = StringField('Part Name', validators=[DataRequired()])
     price = FloatField('Price', validators=[DataRequired()])
+
+# Subform for individual OrderItem
+class OrderItemForm(FlaskForm):
+    part = SelectField('Part', coerce=int, validators=[DataRequired()])
+    quantity = IntegerField('Quantity', validators=[DataRequired()])
+
+# Main Order creation form
+class OrderForm(FlaskForm):
+    customer = SelectField('Customer', coerce=int, validators=[DataRequired()])
+    items = FieldList(FormField(OrderItemForm), min_entries=1)
+    submit = SubmitField('Create Order')
