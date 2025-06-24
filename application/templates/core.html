@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cores</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/CMV TRUCK.png') }}"> <!--FLAVICON-->
+    <style>
+        .whitesmoke {
+            background: linear-gradient(to bottom right, #ffffff, #f5f5f5);
+        }
+
+        .custom-shape-divider-bottom-1750506779 {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .custom-shape-divider-bottom-1750506779 svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 150px;
+        }
+
+        .custom-shape-divider-bottom-1750506779 .shape-fill {
+            fill: #DA2F2F;
+        }
+    </style>
+</head>
+
+<body class="whitesmoke flex h-screen bg-gray-200">
+
+    <!-- NAV BAR -->
+    <nav
+        class="z-20 fixed top-0 left-0 border bg-white flex flex-1 max-w-[15vh] flex-col items-center justify-between rounded-br-xl rounded-tr-xl h-full overflow-hidden">
+        <img src="{{ url_for('static', filename='img/CMV TRUCK.png') }}" alt="" class="h-[4vh] w-[4vh] mt-3">
+
+        <div class="m-0 p-0 w-full">
+            <ul class="flex flex-col w-full">
+                <li><a href=""
+                        class="lg:text-sm font-semibold p-1 w-full block truncate hover:bg-red-200 hover:text-red-700 bg-gray-100 text-red-700">Home</a>
+                </li>
+                <li><a href=""
+                        class="lg:text-sm font-semibold p-1 w-full block truncate hover:bg-red-200 hover:text-red-700">POS</a>
+                </li>
+                <li><a href=""
+                        class="lg:text-sm font-semibold p-1 w-full block truncate hover:bg-red-200 hover:text-red-700">Search</a>
+                </li>
+                <li><a href=""
+                        class="lg:text-sm font-semibold p-1 w-full block truncate hover:bg-red-200 hover:text-red-700">Manifest</a>
+                </li>
+                <li><a href=""
+                        class="lg:text-sm font-semibold p-1 w-full block truncate hover:bg-red-200 hover:text-red-700">Reporting</a>
+                </li>
+                <li><a href=""
+                        class="lg:text-sm font-semibold p-1 w-full block truncate hover:bg-red-200 hover:text-red-700">Admin</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="text-center text-sm break-words p-2">Benjamin Harvey</div>
+    </nav>
+
+
+    <div class="ml-[15vh] flex-[8] p-5">
+        <!--HEADER -->
+        <div
+            class="bg-red-700/50 relative flex justify-between items-center border rounded p-4 font-semibold text-white text-lg mb-5 overflow-hidden">
+
+            <!-- SVG Background Wave -->
+            <div class="absolute top-0 left-0 w-full h-[75px] z-0">
+                <svg preserveAspectRatio="none" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"
+                    class="w-full h-full">
+                    <path
+                        d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.8-37.5 73.84-4.36 147.54 16.88 218.2 35.26 69.27 18 138.3 24.88 209.4 13.08 36.15-6 69.85-17.84 104.45-29.34C989.49 25 1113-14.29 1200 52.47V0z"
+                        opacity=".25" fill="indianred" />
+                    <path
+                        d="M0 0v15.81c13 21.11 27.64 41.05 47.69 56.24C99.41 111.27 165 111 224.58 91.58c31.15-10.15 60.09-26.07 89.67-39.8 40.92-19 84.73-46 130.83-49.67 36.26-2.85 70.9 9.42 98.6 31.56 31.77 25.39 62.32 62 103.63 73 40.44 10.79 81.35-6.69 119.13-24.28s75.16-39 116.92-43.05c59.73-5.85 113.28 22.88 168.9 38.84 30.2 8.66 59 6.17 87.09-7.5 22.43-10.89 48-26.93 60.65-49.24V0z"
+                        opacity=".5" fill="indianred" />
+                    <path
+                        d="M0 0v5.63C149.93 59 314.09 71.32 475.83 42.57c43-7.64 84.23-20.12 127.61-26.46 59-8.63 112.48 12.24 165.56 35.4C827.93 77.22 886 95.24 951.2 90c86.53-7 172.46-45.71 248.8-84.81V0z"
+                        fill="indianred" />
+                </svg>
+            </div>
+
+            <!-- Foreground Content -->
+            <div class="relative z-0 flex flex-col">
+                <p class="text-gray-200 text-xs">Good afternoon!</p>
+                <h1 class="text-gray-100 text-xl">Benjamin Harvey</h1>
+            </div>
+
+            <p class="relative z-10">CMV Core Deposit</p>
+
+            <div class="relative z-10 flex">
+                <p class="flex items-center text-xs mr-3">Your authorisation level is ENTRY</p>
+                <div class="bg-gray-300/50 flex flex-col items-center border rounded-xl p-1">
+                    <p class="text-red-900">SAT</p>
+                    <p class="text-gray-100">21st June</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- BRANCH SELECT -->
+        <ul class="flex mb-5 w-full">
+
+            <li class="w-1/4 relative mr-2">
+                <a href="#" class="flex flex-col bg-white rounded border overflow-hidden h-full">
+                    <!-- Foreground Content -->
+                    <img src="{{ url_for('static', filename='img/CMV TRUCK.png') }}" alt=""
+                        class="relative z-10 h-[10vh] w-full object-cover">
+                    <div class="relative text-center font-semibold">
+                        <!-- SVG Background Wave -->
+                        <div class="bg-red-700/50 absolute top-0 left-0 w-full h-[75px] z-0">
+                            <svg preserveAspectRatio="none" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg"
+                                class="w-full h-full">
+                                <path
+                                    d="M0 0v46.29c47.79 22.2 103.59 32.17 158 28 70.36-5.37 136.33-33.31 206.8-37.5 73.84-4.36 147.54 16.88 218.2 35.26 69.27 18 138.3 24.88 209.4 13.08 36.15-6 69.85-17.84 104.45-29.34C989.49 25 1113-14.29 1200 52.47V0z"
+                                    opacity=".25" fill="indianred" />
+                                <path
+                                    d="M0 0v15.81c13 21.11 27.64 41.05 47.69 56.24C99.41 111.27 165 111 224.58 91.58c31.15-10.15 60.09-26.07 89.67-39.8 40.92-19 84.73-46 130.83-49.67 36.26-2.85 70.9 9.42 98.6 31.56 31.77 25.39 62.32 62 103.63 73 40.44 10.79 81.35-6.69 119.13-24.28s75.16-39 116.92-43.05c59.73-5.85 113.28 22.88 168.9 38.84 30.2 8.66 59 6.17 87.09-7.5 22.43-10.89 48-26.93 60.65-49.24V0z"
+                                    opacity=".5" fill="indianred" />
+                                <path
+                                    d="M0 0v5.63C149.93 59 314.09 71.32 475.83 42.57c43-7.64 84.23-20.12 127.61-26.46 59-8.63 112.48 12.24 165.56 35.4C827.93 77.22 886 95.24 951.2 90c86.53-7 172.46-45.71 248.8-84.81V0z"
+                                    fill="indianred" />
+                            </svg>
+                        </div>
+
+                        <!-- Foreground text -->
+                        <p class="relative z-10 text-white">CMV Truck Centre - Cavan</p>
+                    </div>
+
+                </a>
+            </li>
+
+            <!-- Repeat other cards -->
+            <li class="w-1/4 mr-2">
+                <a href="#" class="bg-white rounded border block text-center p-4">LINK</a>
+            </li>
+            <li class="w-1/4 mr-2">
+                <a href="#" class="bg-white rounded border block text-center p-4">LINK</a>
+            </li>
+            <li class="w-1/4">
+                <a href="#" class="bg-white rounded border block text-center p-4">LINK</a>
+            </li>
+
+        </ul>
+
+
+        <!-- ORDERS TABLE -->
+        <div class="bg-white border rounded h-[60vh] mb-5">
+            <h2 class="p-2 bg-gray-400 font-semibold text-md text-gray-100 pl-3">Cores List</h2>
+            <table class="w-full">
+                <tr>
+                    <thead class="font-semibold text-gray-600 bg-gray-200 text-xs">
+                        <th>CRC #</th>
+                        <th>Customer Invoice</th>
+                        <th>Customer</th>
+                        <th>Part #</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Supplier</th>
+                        <th>Supplier Invoice</th>
+                        <th>Salesman</th>
+                        <th>POS Date</th>
+                        <th>Status</th>
+                    </thead>
+                </tr>
+
+                <tr class="text-xs text-center border-b">
+                    <td class="p-2 font-semibold">
+                        <a href="" class="underline text-blue-500 hover:text-blue-700">14971</a>
+                    </td>
+                    <td class="p-2">I31024608</td>
+                    <td class="p-2">TML Transport</td>
+                    <td class="p-2">KWTAS8516ARC0RE</td>
+                    <td class="p-2">1</td>
+                    <td class="p-2">$1,560</td>
+                    <td class="p-2">PACCAR</td>
+                    <td class="p-2">3771623</td>
+                    <td class="p-2">Benjamin Harvey</td>
+                    <td class="p-2">04/02/2025</td>
+                    <td class="p-2">Returned</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

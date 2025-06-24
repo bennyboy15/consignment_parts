@@ -182,7 +182,7 @@
                     {{ order.total_parts }} total items
                 </td>
                 <td class="px-6 py-4">
-                    ${{ order.total_price }}
+                    ${{ order.total_price | currency }}
                 </td>
                 <td class="px-6 py-4 text-right">
                     <a href="{{ url_for('order_details', id=order.id) }}"
@@ -228,6 +228,7 @@
         }
     });
 
+    // -- ADD TO ORDER TABLE --
     const orderTable = document.getElementById("new-order-table");
     document.getElementById('new-part-add').addEventListener('click', ()=> {
         const new_row = document.createElement("tr")
@@ -241,11 +242,11 @@
         new_qty.classList.add("px-1", "w-1/6", "text-center");
 
         const new_price = document.createElement("td")
-        new_price.innerText = "$" + document.getElementById("price").value;
+        new_price.innerText = "$" + parseFloat(document.getElementById("price").value).toFixed(2);
         new_price.classList.add("px-1", "w-1/6", "text-center");
 
         const new_total = document.createElement("td")
-        new_total.innerText = "$" + (document.getElementById("price").value * document.getElementById("new-order-qty").value);
+        new_total.innerText = "$" + parseFloat(document.getElementById("price").value * document.getElementById("new-order-qty").value).toFixed(2);;
         new_total.classList.add("px-1", "w-1/6", "text-center");
 
         new_row.appendChild(new_part);
